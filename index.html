@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechVida Honduras — Introducción</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1A3C6B;
+    --teal: #10A57D;
+    --teal-dark: #0D7A5F;
+    --white: #FFFFFF;
+    --light: #E8F4F0;
+    --text: #1A1A2E;
+    --gray: #6B7280;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── SCENE SYSTEM ── */
+  .scene {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .scene.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── SCENE 1: LOGO INTRO ── */
+  #scene1 {
+    background: var(--navy);
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  .logo-ring {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+    box-shadow: 0 0 60px rgba(16,165,125,0.4);
+    animation: pulse 3s ease-in-out infinite;
+    margin: 0 auto;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 40px rgba(16,165,125,0.4); }
+    50%       { box-shadow: 0 0 80px rgba(16,165,125,0.7); }
+  }
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 8vw, 72px);
+    color: var(--white);
+    line-height: 1;
+  }
+  .logo-name span { color: var(--teal); }
+  .logo-tagline {
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .scene1-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 80% 20%, rgba(16,165,125,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(16,165,125,0.08) 0%, transparent 50%);
+  }
+
+  /* ── SCENE 2: PROBLEMA ── */
+  #scene2 {
+    background: #0F2347;
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+  }
+  .scene-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  .scene-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 700px;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(16,165,125,0.25);
+    border-radius: 16px;
+    padding: 28px 16px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .stat-icon { font-size: 32px; }
+  .stat-num {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 900;
+    color: var(--teal);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ── SCENE 3: SOLUCIÓN ── */
+  #scene3 {
+    background: var(--navy);
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 680px;
+    width: 100%;
+  }
+  .feature-card {
+    background: rgba(16,165,125,0.1);
+    border: 1px solid rgba(16,165,125,0.3);
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: left;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    background: rgba(16,165,125,0.18);
+  }
+  .feature-icon { font-size: 36px; }
+  .feature-title { font-size: 16px; font-weight: 700; color: var(--white); }
+  .feature-desc  { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  /* ── SCENE 4: DEMO / APP MOCKUP ── */
+  #scene4 {
+    background: #0A1F40;
+    flex-direction: column;
+    gap: 36px;
+    text-align: center;
+  }
+  .phone-mockup {
+    width: 220px;
+    background: #0F2347;
+    border: 3px solid rgba(16,165,125,0.5);
+    border-radius: 36px;
+    padding: 20px 14px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(16,165,125,0.2);
+    margin: 0 auto;
+  }
+  .phone-status {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: rgba(255,255,255,0.4); margin-bottom: 14px;
+  }
+  .phone-header {
+    background: var(--teal);
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+  .phone-header-greeting { font-size: 10px; color: rgba(255,255,255,0.75); }
+  .phone-header-name { font-size: 14px; font-weight: 700; }
+  .phone-metric-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px; margin-bottom: 10px;
+  }
+  .phone-metric {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 10px 8px;
+    text-align: center;
+  }
+  .pm-icon { font-size: 18px; }
+  .pm-val { font-size: 13px; font-weight: 700; color: var(--teal); }
+  .pm-label { font-size: 8px; color: rgba(255,255,255,0.45); }
+  .phone-appt {
+    background: rgba(16,165,125,0.15);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 9px;
+    text-align: left;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 8px;
+  }
+  .phone-appt strong { color: var(--white); display: block; font-size: 10px; margin-bottom: 2px; }
+  .phone-progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: rgba(255,255,255,0.5); margin-bottom: 4px;
+  }
+  .phone-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; }
+  .phone-bar-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--teal), #5EE4C4);
+    width: 72%;
+    animation: barFill 1.5s ease-out forwards;
+  }
+  @keyframes barFill { from { width: 0; } to { width: 72%; } }
+
+  /* ── SCENE 5: CTA ── */
+  #scene5 {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--navy) 100%);
+    flex-direction: column;
+    text-align: center;
+    gap: 28px;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 58px);
+    line-height: 1.1;
+    max-width: 600px;
+  }
+  .cta-sub {
+    font-size: clamp(14px, 2vw, 18px);
+    color: rgba(255,255,255,0.7);
+    max-width: 480px;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--white);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px 48px;
+    border-radius: 99px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .cta-btn:hover { transform: scale(1.05); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+  .cta-logo-small {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.9);
+  }
+  .cta-logo-small span { color: #5EE4C4; }
+
+  /* ── PROGRESS NAV ── */
+  .progress-nav {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 100;
+  }
+  .pn-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer; transition: all 0.3s;
+  }
+  .pn-dot.active { background: var(--teal); width: 24px; border-radius: 99px; }
+
+  /* ── TIMER BAR ── */
+  .timer-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--teal);
+    transition: width 0.5s linear;
+    z-index: 200;
+  }
+
+  @media (max-width: 600px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Timer bar -->
+<div class="timer-bar" id="timerBar" style="width:0%"></div>
+
+<!-- Scene 1: Logo Intro -->
+<section class="scene" id="scene1">
+  <div class="scene1-bg"></div>
+  <div class="logo-ring">💚</div>
+  <div class="logo-name">Tech<span>Vida</span></div>
+  <p class="logo-tagline">Tu Salud Digital · Honduras</p>
+</section>
+
+<!-- Scene 2: Problema -->
+<section class="scene" id="scene2">
+  <p class="scene-eyebrow">El problema</p>
+  <h2 class="scene-title">Los hondureños descuidan su salud por falta de tiempo y herramientas</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-icon">⏰</span>
+      <span class="stat-num">7 de 10</span>
+      <span class="stat-label">adultos no registran sus métricas de salud</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">📅</span>
+      <span class="stat-num">40%</span>
+      <span class="stat-label">olvidan o cancelan citas médicas programadas</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">📱</span>
+      <span class="stat-num">0</span>
+      <span class="stat-label">apps de salud diseñadas para el contexto hondureño</span>
+    </div>
+  </div>
+</section>
+
+<!-- Scene 3: Solución -->
+<section class="scene" id="scene3">
+  <p class="scene-eyebrow">La solución</p>
+  <h2 class="scene-title">Una plataforma hecha para tu vida</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">👣</span>
+      <span class="feature-title">Monitoreo Personal</span>
+      <span class="feature-desc">Pasos, hidratación y sueño en un solo dashboard diario.</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📆</span>
+      <span class="feature-title">Citas Sin Estrés</span>
+      <span class="feature-desc">Agenda con tu médico en segundos, con recordatorios inteligentes.</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎓</span>
+      <span class="feature-title">Contenido Educativo</span>
+      <span class="feature-desc">Videos e infografías validadas por profesionales de salud.</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🏆</span>
+      <span class="feature-title">Metas y Logros</span>
+      <span class="feature-desc">Gamificación que celebra cada avance en tu bienestar.</span>
+    </div>
+  </div>
+</section>
+
+<!-- Scene 4: App Demo -->
+<section class="scene" id="scene4">
+  <p class="scene-eyebrow">Así se ve TechVida</p>
+  <h2 class="scene-title" style="font-size:clamp(22px,4vw,36px)">Diseñada para que cuides tu salud sin complicaciones</h2>
+  <div class="phone-mockup">
+    <div class="phone-status"><span>9:41</span><span>●●● WiFi 🔋</span></div>
+    <div class="phone-header">
+      <div class="phone-header-greeting">Buenos días,</div>
+      <div class="phone-header-name">María 👋</div>
+    </div>
+    <div class="phone-metric-row">
+      <div class="phone-metric">
+        <div class="pm-icon">👣</div>
+        <div class="pm-val">6,240</div>
+        <div class="pm-label">pasos hoy</div>
+      </div>
+      <div class="phone-metric">
+        <div class="pm-icon">💧</div>
+        <div class="pm-val">1.4 L</div>
+        <div class="pm-label">hidratación</div>
+      </div>
+      <div class="phone-metric">
+        <div class="pm-icon">😴</div>
+        <div class="pm-val">7h 20m</div>
+        <div class="pm-label">sueño</div>
+      </div>
+      <div class="phone-metric">
+        <div class="pm-icon">❤️</div>
+        <div class="pm-val">72 bpm</div>
+        <div class="pm-label">frecuencia</div>
+      </div>
+    </div>
+    <div class="phone-appt">
+      <strong>📅 Cita — Mañana 10:00 AM</strong>
+      Dr. López · Medicina General
+    </div>
+    <div class="phone-progress-label">
+      <span>Meta semanal</span><span>72%</span>
+    </div>
+    <div class="phone-bar"><div class="phone-bar-fill"></div></div>
+  </div>
+</section>
+
+<!-- Scene 5: CTA -->
+<section class="scene" id="scene5">
+  <div class="cta-logo-small">Tech<span>Vida</span></div>
+  <h2 class="cta-title">Tu salud merece una herramienta a tu altura</h2>
+  <p class="cta-sub">Únete a TechVida Honduras y transforma la manera en que cuidas tu bienestar cada día.</p>
+  <button class="cta-btn">Quiero empezar gratis →</button>
+</section>
+
+<!-- Progress dots -->
+<div class="progress-nav" id="progressNav"></div>
+
+<script>
+  const scenes = document.querySelectorAll('.scene');
+  const nav = document.getElementById('progressNav');
+  const timerBar = document.getElementById('timerBar');
+  const TOTAL_DURATION = 60; // seconds
+  let currentScene = 0;
+  let autoTimer = null;
+  const sceneDurations = [8, 13, 14, 14, 11]; // ~60s total
+
+  // Build nav dots
+  scenes.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'pn-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToScene(i));
+    nav.appendChild(dot);
+  });
+
+  function updateDots(idx) {
+    document.querySelectorAll('.pn-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+  }
+
+  function goToScene(idx) {
+    if (idx < 0 || idx >= scenes.length) return;
+    scenes[currentScene].classList.remove('visible');
+    currentScene = idx;
+    scenes[currentScene].classList.add('visible');
+    scenes[currentScene].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    updateDots(idx);
+  }
+
+  // Intersection observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const idx = Array.from(scenes).indexOf(entry.target);
+        updateDots(idx);
+        currentScene = idx;
+      }
+    });
+  }, { threshold: 0.5 });
+
+  scenes.forEach(s => observer.observe(s));
+
+  // Auto-advance timer
+  function startAutoPlay() {
+    let elapsed = 0;
+    let sceneIdx = 0;
+    let sceneElapsed = 0;
+
+    goToScene(0);
+
+    const tick = setInterval(() => {
+      elapsed += 0.5;
+      sceneElapsed += 0.5;
+      timerBar.style.width = Math.min((elapsed / TOTAL_DURATION) * 100, 100) + '%';
+
+      if (sceneElapsed >= sceneDurations[sceneIdx]) {
+        sceneIdx++;
+        sceneElapsed = 0;
+        if (sceneIdx < scenes.length) {
+          goToScene(sceneIdx);
+        } else {
+          clearInterval(tick);
+        }
+      }
+    }, 500);
+  }
+
+  // Start after 1 second
+  setTimeout(startAutoPlay, 1000);
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goToScene(currentScene + 1);
+    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goToScene(currentScene - 1);
+  });
+</script>
+</body>
+</html>
